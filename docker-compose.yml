@@ -43,6 +43,17 @@ services:
     networks:
       - ansible_lab
 
+  mint:
+    build:
+      context: .
+      dockerfile: docker/mint/Dockerfile
+    container_name: ansible-mint
+    hostname: mint
+    ports:
+      - "2205:22"
+    networks:
+      - ansible_lab
+
 networks:
   ansible_lab:
     driver: bridge

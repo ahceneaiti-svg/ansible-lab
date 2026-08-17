@@ -1,7 +1,7 @@
 # Lab Ansible via Docker
 
 Environnement de test léger pour apprendre et pratiquer Ansible en local, sans VM.
-4 conteneurs (Ubuntu 24.04, Fedora 40, Debian 12, Arch Linux) avec SSH + Python3 préinstallés.
+5 conteneurs (Ubuntu 24.04, Fedora 40, Debian 12, Arch Linux, Linux Mint 22) avec SSH + Python3 préinstallés.
 
 ## Prérequis
 
@@ -32,6 +32,7 @@ ansible all -m ping
 | fedora    | Fedora 40      | 2202           |
 | debian    | Debian 12      | 2203           |
 | archlinux | Arch Linux     | 2204           |
+| mint      | Linux Mint 22  | 2205           |
 
 - Utilisateur SSH: `ansible` (sudo NOPASSWD sur les 4 conteneurs)
 - Authentification: clé SSH dédiée générée dans `keys/id_ansible` (ignorée par git)
@@ -68,7 +69,8 @@ make clean    # arrête + supprime la clé SSH générée
 │   ├── ubuntu/Dockerfile
 │   ├── fedora/Dockerfile
 │   ├── debian/Dockerfile
-│   └── archlinux/Dockerfile
+│   ├── archlinux/Dockerfile
+│   └── mint/Dockerfile
 ├── keys/                # clé SSH générée (non versionnée)
 ├── docker-compose.yml
 ├── inventory.ini
