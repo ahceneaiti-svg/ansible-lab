@@ -1,0 +1,48 @@
+services:
+  ubuntu:
+    build:
+      context: .
+      dockerfile: docker/ubuntu/Dockerfile
+    container_name: ansible-ubuntu
+    hostname: ubuntu
+    ports:
+      - "2201:22"
+    networks:
+      - ansible_lab
+
+  fedora:
+    build:
+      context: .
+      dockerfile: docker/fedora/Dockerfile
+    container_name: ansible-fedora
+    hostname: fedora
+    ports:
+      - "2202:22"
+    networks:
+      - ansible_lab
+
+  debian:
+    build:
+      context: .
+      dockerfile: docker/debian/Dockerfile
+    container_name: ansible-debian
+    hostname: debian
+    ports:
+      - "2203:22"
+    networks:
+      - ansible_lab
+
+  archlinux:
+    build:
+      context: .
+      dockerfile: docker/archlinux/Dockerfile
+    container_name: ansible-archlinux
+    hostname: archlinux
+    ports:
+      - "2204:22"
+    networks:
+      - ansible_lab
+
+networks:
+  ansible_lab:
+    driver: bridge

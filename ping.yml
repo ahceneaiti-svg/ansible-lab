@@ -1,0 +1,11 @@
+---
+- name: Vérifier la connectivité et collecter les infos système
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Ping
+      ansible.builtin.ping:
+
+    - name: Afficher la distribution
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} -> {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}"
