@@ -1,0 +1,8 @@
+---
+- name: Afficher nom et version de la distribution
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Afficher distribution et version
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} -> {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}"

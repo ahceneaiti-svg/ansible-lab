@@ -50,6 +50,9 @@ ansible fedora_lab -m ping
 # lancer le playbook de vérification (facts + ping)
 ansible-playbook ping.yml
 
+# afficher nom + version de la distribution de chaque hôte
+ansible-playbook os-release.yml
+
 # exécuter une commande ad-hoc
 ansible all -a "cat /etc/os-release"
 ```

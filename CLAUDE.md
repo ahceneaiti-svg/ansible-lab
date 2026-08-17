@@ -37,10 +37,12 @@ Ad-hoc command example: `ansible all -a "cat /etc/os-release"`.
 - **`inventory.ini`** — static inventory: one group per distro (`<distro>_lab`), each with a single host pointing at `127.0.0.1:<mapped port>`. Shared `[all:vars]` sets `ansible_user=ansible`, the private key path (`./keys/id_ansible`), `ansible_python_interpreter`, and disables strict host key checking (containers get fresh host keys on every rebuild).
 - **`ansible.cfg`** — points at `inventory.ini`, disables host key checking and retry files.
 - **`ping.yml`** — sample/verification playbook: pings all hosts and prints `ansible_facts['distribution']`/`distribution_version` per host. Use `ansible_facts['x']`, not the legacy `ansible_x` top-level fact vars (avoids the `INJECT_FACTS_AS_VARS` deprecation warning).
+- **`os-release.yml`** — same pattern as `ping.yml` but focused purely on printing distro name/version per host (no ping task).
 - **`setup.sh`** — idempotent: generates `keys/id_ansible` (ed25519) only if it doesn't already exist, then fixes permissions (600/644). This key pair is gitignored and regenerated per-clone.
 
 ## Gotchas
 
 - Host key checking is disabled by design (`ansible_ssh_common_args` in `inventory.ini` + `host_key_checking` in `ansible.cfg`) because containers get new SSH host keys on every rebuild.
 - Inventory group names use a `_lab` suffix (`ubuntu_lab`, not `ubuntu`) specifically to avoid Ansible's "Found both group and host with same name" warning, since the hostnames themselves are `ubuntu`, `fedora`, etc.
-- Arch Linux's sshd binary lives at `/usr/bin/sshd`; Ubuntu/Debian/Fedora use `/usr/sbin/sshd`. Keep this in mind if editing the Dockerfiles' `CMD`.
+- Arch Linux's sshd binary lives at `/usr/bin/sshd`; Ubuntu/Debian/Fedora/Mint use `/usr/sbin/sshd`. Keep this in mind if editing the Dockerfiles' `CMD`.
+- The `mint` container reports as `Ubuntu 24.04` in `ansible_facts`/`/etc/os-release` (`ID=ubuntu`), not "Linux Mint" — `linuxmintd/mint22-amd64` is Mint's official CI/build image and isn't re-branded. This is expected, not a bug.
